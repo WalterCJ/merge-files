@@ -11,7 +11,11 @@ const argv = require('yargs')
 
 const source = fs.createReadStream(argv.source)
 const base = fs.createWriteStream(argv.base, {'flags': 'a'})
-
+/**
+ * Create and format a header for the source 
+ * @param {string} title - Title for the header
+ * @returns {string} - a formated header string
+ */
 function formatHeader(title){
     const dash5 = '-----',        
         space5 = '     ';
@@ -24,6 +28,10 @@ function formatHeader(title){
     }
     return `\n\n\n${dash5+dashTitleLength+dash5}\n${space5+title+space5}\n${dash5+dashTitleLength+dash5}\n`
 }
+
+/**
+ * Choose a base file to be appended using a source file 
+ */
 function mergeFiles(){
     base.write(formatHeader(argv.title));
     source.on('data', (chunk) => {
