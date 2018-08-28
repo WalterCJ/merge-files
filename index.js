@@ -15,7 +15,6 @@ const base = fs.createWriteStream(argv.base, {'flags': 'a'})
 base.write(`--------------------\n${argv.title || '===================='}\n--------------------\n`);
 source.on('data', (chunk) => {
     base.write(chunk);
-    console.log(chunk);
 });
 source.on('end', () => {
     base.end();
