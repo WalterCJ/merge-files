@@ -24,11 +24,14 @@ function formatHeader(title){
     }
     return `\n\n\n${dash5+dashTitleLength+dash5}\n${space5+title+space5}\n${dash5+dashTitleLength+dash5}\n`
 }
-base.write(formatHeader(argv.title));
+function mergeFiles(){
+    base.write(formatHeader(argv.title));
+    source.on('data', (chunk) => {
+        base.write(chunk);
+    });
+    source.on('end', () => {
+        base.end();
+    });
+}
 
-source.on('data', (chunk) => {
-    base.write(chunk);
-});
-source.on('end', () => {
-    base.end();
-});
+mergeFiles();
