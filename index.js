@@ -12,7 +12,20 @@ const argv = require('yargs')
 const source = fs.createReadStream(argv.source)
 const base = fs.createWriteStream(argv.base, {'flags': 'a'})
 
-base.write(`--------------------\n${argv.title || '===================='}\n--------------------\n`);
+function formatHeader(title){
+    const dash5 = '-----',        
+        space5 = '     ';
+    let dashTitleLength = '';
+    if(title){
+        dashTitleLength = '-'.repeat(title.length)
+    }else{
+        dashTitleLength = '-'.repeat(20)
+        title = ' '.repeat(20)
+    }
+    return `\n\n\n${dash5+dashTitleLength+dash5}\n${space5+title+space5}\n${dash5+dashTitleLength+dash5}\n`
+}
+base.write(formatHeader(argv.title));
+
 source.on('data', (chunk) => {
     base.write(chunk);
 });
