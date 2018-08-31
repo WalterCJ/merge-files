@@ -10,8 +10,6 @@ const argv = require('yargs')
                 .help('h')
                 .argv
 
-const source = fs.createReadStream(argv.source)
-const base = fs.createWriteStream(argv.base, {'flags': 'a'})
 /**
  * Create and format a header for the source 
  * @param {string} title - Title for the header
@@ -33,17 +31,20 @@ function formatHeader(title){
 /**
  * Choose a base file to be appended using a source file 
  */
-function mergeFiles(){
+function mergeFiles(base, source, title){
     return new Promise ((resolve,reject) => {
-        base.write(formatHeader(argv.title));
-        source.on('data', (chunk) => {
-            base.write(chunk)
+        const sourceStream = fs.createReadStream(source)
+        const baseStream = fs.createWriteStream(base, {'flags': 'a'})
+
+        baseStream.write(formatHeader(title));
+        sourceStream.on('data', (chunk) => {
+            baseStream.write(chunk)
         })
-        source.on('error', (err) => {
+        sourceStream.on('error', (err) => {
             reject(err)
         })
-        source.on('end', () => {
-            base.end()
+        sourceStream.on('end', () => {
+            baseStream.end()
             resolve(true)     
         })
     })
@@ -52,7 +53,7 @@ function removeSource(){
     rimraf(argv.source, function () {});
 }
 async function main(){
-    await mergeFiles()
+    await mergeFiles(argv.base, argv.source,argv.title)
     removeSource()
 }
 
