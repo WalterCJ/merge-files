@@ -43,4 +43,4 @@ function remove(source){
     rimraf(source, function () {});
 }
 
-module.exports = {remove,merge,formatHeader}
+module.exports = {remove,merge}
