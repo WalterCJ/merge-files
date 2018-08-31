@@ -4,7 +4,6 @@ const rimraf = require('rimraf')
 const dirnameOrigin = path.join(__dirname, 'files')
 
 function createFiles(){ 
-    console.log('in createFiles')
     fs.mkdirSync(dirnameOrigin)   
     for(let i=0; i< 2;i++) {
         filePath = path.join(dirnameOrigin, `file_${i}`)
@@ -13,7 +12,6 @@ function createFiles(){
             if(error) throw error; 
         })
     }
-    console.log('out createFiles')
 }
 
 function removeFolder(){
