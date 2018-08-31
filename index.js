@@ -49,12 +49,12 @@ function merge(base, source, title){
         })
     })
 }
-function remove(){
-    rimraf(argv.source, function () {});
+function remove(source){
+    rimraf(source, function () {});
 }
 async function main(){
     await merge(argv.base, argv.source,argv.title)
-    remove()
+    remove(argv.source)
 }
 
 main()
