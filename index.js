@@ -1,4 +1,5 @@
 var fs = require('fs')
+const rimraf = require('rimraf')
 const argv = require('yargs')
                 .alias('b', 'base')
                 .describe('b', 'Base file')
@@ -33,13 +34,26 @@ function formatHeader(title){
  * Choose a base file to be appended using a source file 
  */
 function mergeFiles(){
-    base.write(formatHeader(argv.title));
-    source.on('data', (chunk) => {
-        base.write(chunk);
-    });
-    source.on('end', () => {
-        base.end();
-    });
+    return new Promise ((resolve,reject) => {
+        base.write(formatHeader(argv.title));
+        source.on('data', (chunk) => {
+            base.write(chunk)
+        })
+        source.on('error', (err) => {
+            reject(err)
+        })
+        source.on('end', () => {
+            base.end()
+            resolve(true)     
+        })
+    })
+}
+function removeSource(){
+    rimraf(argv.source, function () {});
+}
+async function main(){
+    await mergeFiles()
+    removeSource()
 }
 
-mergeFiles();
+main()
