@@ -1,5 +1,6 @@
 var fs = require('fs')
 const rimraf = require('rimraf')
+
 /**
  * Create and format a header for the source 
  * @param {string} title - Title for the header
@@ -20,6 +21,9 @@ function formatHeader(title){
 
 /**
  * Choose a base file to be appended using a source file 
+ * @param {string} base - File to be appended
+ * @param {string} source - File with content to be add to base file
+ * @param {string} title - Title for the header
  */
 function merge(base, source, title){
     return new Promise ((resolve,reject) => {
