@@ -31,7 +31,7 @@ function formatHeader(title){
 /**
  * Choose a base file to be appended using a source file 
  */
-function mergeFiles(base, source, title){
+function merge(base, source, title){
     return new Promise ((resolve,reject) => {
         const sourceStream = fs.createReadStream(source)
         const baseStream = fs.createWriteStream(base, {'flags': 'a'})
@@ -49,12 +49,12 @@ function mergeFiles(base, source, title){
         })
     })
 }
-function removeSource(){
+function remove(){
     rimraf(argv.source, function () {});
 }
 async function main(){
-    await mergeFiles(argv.base, argv.source,argv.title)
-    removeSource()
+    await merge(argv.base, argv.source,argv.title)
+    remove()
 }
 
 main()
