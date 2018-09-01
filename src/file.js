@@ -44,7 +44,15 @@ function merge(base, source, title){
     })
 }
 function remove(source){
-    rimraf(source, function () {});
+    return new Promise((resolve, reject) => {        
+        rimraf(source, function(err) {
+            if(err){
+                console.log(err)
+                reject(err)                    
+            }            
+        })                  
+        resolve(true)
+    })
 }
 
 module.exports = {remove,merge}
