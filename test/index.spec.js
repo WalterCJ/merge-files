@@ -15,9 +15,9 @@ describe('Merge Files', function () {
     describe('mergeFiles', function () {
         describe('merge', function () {
             const dirname = path.join(__dirname, '/util/files')   
-            it('Should return a promise', function () {   
-                const ShouldMergeFile = file.merge(path.join(dirname,'file_0'),path.join(dirname,'file_1'),'random title')
-                expect(ShouldMergeFile).to.be.a('promise')            
+            it('Should merge files', async function () {   
+                const result = await file.merge(path.join(dirname,'file_0'),path.join(dirname,'file_1'),'random title')
+                expect(result).to.be.true        
             })
         })
         describe('merge', function () {
