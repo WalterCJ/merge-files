@@ -20,7 +20,7 @@ describe('Merge Files', function () {
                 expect(result).to.be.true        
             })
         })
-        describe('merge', function () {
+        describe('remove', function () {
             const dirname = path.join(__dirname, '/util/files')   
             it('Should remove files', async function () {
                 const result = await file.remove(path.join(dirname,'file_1'))
