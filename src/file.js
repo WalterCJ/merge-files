@@ -24,6 +24,7 @@ function formatHeader(title){
  * @param {string} base - File to be appended
  * @param {string} source - File with content to be add to base file
  * @param {string} title - Title for the header
+ * @returns {boolean} - Returns a promise with true or a error
  */
 function merge(base, source, title){
     return new Promise ((resolve,reject) => {
@@ -43,6 +44,11 @@ function merge(base, source, title){
         })
     })
 }
+/**
+ * Remove file 
+ * @param {string} source - File with content to be add to base file
+ * @returns {boolean} - Returns a promise with true or a error
+ */
 function remove(source){
     return new Promise((resolve, reject) => {        
         rimraf(source, function(err) {
