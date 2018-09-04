@@ -17,7 +17,13 @@ function createFiles(){
 function removeFolder(){
     rimraf(dirnameOrigin, function () {});
 }
+function countLines(filePath){
+    const data =  fs.readFileSync(filePath, 'utf8')
+    return data.split(/(\r\n|\n|\r)/gm).length;
+}
+
 module.exports = {
     createFiles,
-    removeFolder
+    removeFolder,
+    countLines
 };
